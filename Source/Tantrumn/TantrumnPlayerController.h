@@ -19,9 +19,10 @@ class TANTRUMN_API ATantrumnPlayerController : public APlayerController
 	GENERATED_BODY()
 public:
 
+	virtual void BeginPlay() override;
+
 protected:
 	virtual void SetupInputComponent() override;
-	virtual void BeginPlay() override;
 
 	void RequestMoveForward(float AxisValue);
 	void RequestMoveRight(float AxisValue);

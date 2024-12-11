@@ -96,14 +96,22 @@ void ATantrumnPlayerController::BeginPlay()
 
 void ATantrumnPlayerController::RequestMoveForward(float AxisValue)
 {
-	FRotator const ControlSpaceRot = GetControlRotation();
-	GetPawn()->AddMovementInput(FRotationMatrix(ControlSpaceRot).GetScaledAxis(EAxis::X), AxisValue);
+	if (!GameModeRef || GameModeRef->GetCurrentGameState() != EGameState::Playing) { return; }
+	if (AxisValue != 0.0f)
+	{
+		FRotator const ControlSpaceRot = GetControlRotation();
+		GetPawn()->AddMovementInput(FRotationMatrix(ControlSpaceRot).GetScaledAxis(EAxis::X), AxisValue);
+	}
 }
 
 void ATantrumnPlayerController::RequestMoveRight(float AxisValue)
 {
-	FRotator const ControlSpaceRot = GetControlRotation();
-	GetPawn()->AddMovementInput(FRotationMatrix(ControlSpaceRot).GetScaledAxis(EAxis::Y), AxisValue);
+	if (!GameModeRef || GameModeRef->GetCurrentGameState() != EGameState::Playing) { return; }
+	if (AxisValue != 0.0f)
+	{
+		FRotator const ControlSpaceRot = GetControlRotation();
+		GetPawn()->AddMovementInput(FRotationMatrix(ControlSpaceRot).GetScaledAxis(EAxis::Y), AxisValue);
+	}
 }
 
 void ATantrumnPlayerController::RequestLookUp(float AxisValue)
@@ -134,6 +142,7 @@ void ATantrumnPlayerController::RequestJumpStop()
 
 void ATantrumnPlayerController::RequestCrouchStart()
 {
+	if (!GameModeRef|| GameModeRef->GetCurrentGameState() != EGameState::Playing) { return; }
 	if (!GetCharacter()->GetCharacterMovement()->IsMovingOnGround()) { return; }
 	if (GetCharacter())
 	{
